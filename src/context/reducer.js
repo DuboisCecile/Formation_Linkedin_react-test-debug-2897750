@@ -13,6 +13,12 @@ function uid() {
     return Math.floor(Math.random() * 900);
 }
 function reducer(state = initialState, { type, payload }) {
+    function check(item) {
+        return item.id === payload.id ? { ...item, done: !item.done } : item;
+    }
+    function remove(item) {
+        return !item.done;
+    }
     switch (type) {
         case ADD_ITEM:
             return {
@@ -23,18 +29,10 @@ function reducer(state = initialState, { type, payload }) {
             };
 
         case CHECK_ITEM:
-            function check(item) {
-                return item.id === payload.id
-                    ? { ...item, done: !item.done }
-                    : item;
-            }
             return {
                 items: state.items.map(check),
             };
         case REMOVE_ITEMS:
-            function remove(item) {
-                return !item.done;
-            }
             return {
                 items: state.items.filter(remove),
             };
