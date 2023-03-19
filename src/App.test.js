@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import App from './App';
+import App, { TodoList, TrashButton } from './App';
 
 // On teste si le composant App est bien rendu
 test('should render App', () => {
@@ -37,4 +37,28 @@ test('should fire submit event', () => {
     // fireEvent.change(inputNode, { target: { value: 'new value' } });
     fireEvent.submit(formNode);
     expect(inputNode.value).toBe('');
+});
+
+// On teste que la liste a bien les 2 éléments passés en props via le test
+test('should render an empty todo list', () => {
+    const items = [
+        { id: 122, value: 'todo #1', done: false },
+        { id: 123, value: 'todo #2', done: false },
+    ];
+    const { rerender } = render(<TodoList items={items} />);
+    // const { getByRole, rerender } = render(<TodoList items={items} />); // si on récupère getByRole ici pour l'utiliser sans screen. devant, cela affiche un message "Avoid desctructuring queries from 'render' result, use 'screen.getByRole' instead"
+    const list = screen.getByRole('list');
+    // On teste que la liste a bien les 2 éléments passés en props via le test
+    expect(list.childNodes).toHaveLength(2);
+    // On fait un rerender et on reteste, avec un tableau vide, ce qui fait échouer le test si on garde bien la valeur de 2
+    rerender(<TodoList items={[]} />);
+    // expect(list.childNodes).toHaveLength(2);
+    // On teste que la liste a bien 0 élément, et ça passe
+    expect(list.childNodes).toHaveLength(0);
+});
+
+test('should render trash button if any todo is done', () => {
+    render(<TrashButton isVisible />);
+    const button = screen.getByRole('button');
+    expect(button).toBeVisible();
 });
