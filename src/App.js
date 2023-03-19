@@ -20,7 +20,6 @@ export const TodoList = ({ items, onClick }) => (
 
 function App() {
     const inputRef = useRef();
-    const variable = 'some var';
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([]);
 
