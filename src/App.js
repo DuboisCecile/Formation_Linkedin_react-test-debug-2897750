@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import './App.css';
 
 export const TrashButton = ({ isVisible, remove }) =>
@@ -20,6 +20,7 @@ export const TodoList = ({ items, onClick }) => (
 
 function App() {
     const inputRef = useRef();
+    const variable = 'some var';
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([]);
 
